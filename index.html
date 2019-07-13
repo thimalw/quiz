@@ -9,21 +9,19 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="content">
+    <div id="content" class="content">
         <header class="app-header">
             <h1>Quiz</h1>
         </header>
 
+        <div id="quiz-difficulty" class="quiz-difficulty">😎</div>
         <div class="quiz-window">
-            <div class="quiz-loading"></div>
-            <div id="question" class="quiz-qs">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis, sequi in obcaecati sed exercitationem vel maxime voluptate hic corrupti ex distinctio facere voluptatibus quidem, ad iste, dicta maiores dignissimos impedit.
-            </div>
-            <div id="answers" class="quiz-an">
-                <div class="quiz-an-single">Answer One</div>
-                <div class="quiz-an-single">Answer Two</div>
-                <div class="quiz-an-single">Answer Three</div>
-                <div class="quiz-an-single">Answer Four</div>
+            <div id="quiz-loading" class="quiz-loading loading">Loading</div>
+            <div id="question" class="quiz-qs"></div>
+            <div id="answers" class="quiz-an"></div>
+            <div id="result" class="quiz-result">
+                <div id="message" class="quiz-result-message"></div>
+                <div id="quiz-continue" class="quiz-continue">Continue</div>
             </div>
         </div>
     </div>

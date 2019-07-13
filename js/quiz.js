@@ -1,20 +1,39 @@
 // Open Trivia DB API endpoint
-const quizAPI = 'https://opentdb.com/api.php?amount=1&category=18&type=multiple';
+const quizAPI = 'https://opentdb.com/api.php?amount=1&type=multiple';
+
+// load frequently used DOM elements
 const questionEl = document.getElementById('question');
 const answersEl = document.getElementById('answers');
-var correctAnswer = '';
+const resultEl = document.getElementById('result');
+const resultMessageEl = document.getElementById('message');
+const continueBtnEl = document.getElementById('quiz-continue');
+const difficultyEl = document.getElementById('quiz-difficulty');
+const contentEl = document.getElementById('content');
 
-document.addEventListener('DOMContentLoaded', async function(e) {
+// correct answer to the question
+var correctAnswer = '';
+// user score
+var score = 0;
+
+// initialize app after DOM is loaded
+document.addEventListener('DOMContentLoaded', function(e) {
     init();
 });
 
 // initialize app
 const init = async () => {
-    await loadQuiz();
+    continueBtnEl.addEventListener('click', function(e) {
+        loadQuiz();
+    })
+    
+    loadQuiz();
 };
 
 // loadQuiz loads a new quiz onto the app
 const loadQuiz = async () => {
+    contentEl.classList.add('loading');
+    resultEl.classList.remove('show');
+
     const quizData = await getNewQuiz();
     if (!quizData) {
         return false;
@@ -31,25 +50,51 @@ const loadQuiz = async () => {
     // display the answers
     answersEl.innerHTML = '';
     for (answer of answers) {
-        var answerDiv = document.createElement('div');
-        answerDiv.setAttribute('class', 'quiz-an-single');
-        answerDiv.textContent = he.decode(answer);
-        answerDiv.addEventListener('click', function(e) {
-            checkAnswer(this.innerText);
+        var singleAnswerEl = document.createElement('div');
+        singleAnswerEl.setAttribute('class', 'quiz-an-single');
+        singleAnswerEl.textContent = he.decode(answer);
+        singleAnswerEl.addEventListener('click', function(e) {
+            checkAnswer(he.decode(this.innerText));
         });
 
-        answersEl.appendChild(answerDiv);
+        answersEl.appendChild(singleAnswerEl);
+    }
+
+    if (quizData.difficulty === 'easy') {
+        difficultyEl.innerText = '😎';
+    } else if (quizData.difficulty === 'medium') {
+        difficultyEl.innerText = '🤔';
+    } else if (quizData.difficulty === 'hard') {
+        difficultyEl.innerText = '😰';
     }
 
     correctAnswer = he.decode(quizData.correct_answer);
+    contentEl.classList.remove('loading');
 };
 
 const checkAnswer = (answer) => {
+    // reset result element
+    answersEl.innerHTML = '';
+    resultEl.classList.remove('error');
+    resultEl.classList.remove('success');
+    
+    let resultClass = 'error';
+    let resultMessage = '';
+    
+    // check the answer
     if (answer === correctAnswer) {
-        console.log('Correct!');
+        resultMessage = '"' + correctAnswer + '" is correct!';
+        resultClass = 'success';
+        score++;
     } else {
-        console.log('Wrong!');
+        resultMessage = 'Wrong. The correct answer is "' + correctAnswer + '"';
     }
+
+    resultEl.classList.add(resultClass);
+    resultMessageEl.textContent = resultMessage;
+    
+    // display the result element
+    resultEl.classList.add('show');
 };
 
 // getNewQuiz returns new quiz data from the API
