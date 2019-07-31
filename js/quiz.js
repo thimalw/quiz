@@ -10,10 +10,8 @@ const continueBtnEl = document.getElementById('quiz-continue');
 const difficultyEl = document.getElementById('quiz-difficulty');
 const contentEl = document.getElementById('content');
 
-// correct answer to the question
-var correctAnswer = '';
-// user score
-var score = 0;
+var correctAnswer = ''; // correct answer to the question
+var score = 0;          // user score
 
 // initialize app after DOM is loaded
 document.addEventListener('DOMContentLoaded', function(e) {
@@ -72,7 +70,7 @@ const loadQuiz = async () => {
     contentEl.classList.remove('loading');
 };
 
-const checkAnswer = (answer) => {
+const checkAnswer = answer => {
     // reset result element
     answersEl.innerHTML = '';
     resultEl.classList.remove('error');
