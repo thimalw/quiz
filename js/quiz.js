@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
 // initialize app
 const init = async () => {
+    // create a click event listener on the continue button on result element
+    // to load a new question
     continueBtnEl.addEventListener('click', function(e) {
         loadQuiz();
     })
