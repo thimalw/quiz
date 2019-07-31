@@ -41,6 +41,22 @@ body {
     margin-top: 10px;
 }
 
+.app-footer {
+    margin-top: 30px;
+    font-size: 0.8em;
+    color: #aaa;
+}
+.app-footer a,
+.app-footer a:link,
+.app-footer a:visited {
+    color: #888;
+    text-decoration: none;
+}
+.app-footer a:active,
+.app-footer a:hover {
+    text-decoration: underline;
+}
+
 .quiz-window {
     position: relative;
     width: calc(100% - 30px);
